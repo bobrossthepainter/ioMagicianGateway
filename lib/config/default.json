@@ -1,0 +1,30 @@
+{
+  "mosca": {
+    "port": 1883,
+    //mosca (mqtt) port
+    //logger: {level: "debug"},
+    "backend": {
+      //using ascoltatore
+      "type": "mongo",
+      "url": "mongodb://localhost:27017/pubSub",
+      "pubsubCollection": "mqttPubSub",
+      "mongo": {}
+    }
+  },
+  "routes": {
+    "GET /controlableunit": "ControlableUnitController.getAll",
+    "PUT /controlableunit/:id": "ControlableUnitController.put",
+    "GET /controlableunit/:id": "ControlableUnitController.get",
+    "POST /controlableunit": "ControlableUnitController.post",
+    "POST /controlableunit/register": "ControlableUnitController.register",
+    "GET /action": "ActionController.get"
+  },
+  "mqttProvider": {
+    "subTopics": [
+      "/#/config",
+      "/#/input",
+      "/#/input/#",
+      "/#/hello"
+    ]
+  }
+}

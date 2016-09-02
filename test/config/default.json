@@ -23,11 +23,11 @@
     "GET /action": "ActionController.get"
   },
   "mqttProvider": {
-    "messageFormat" : "/{leafAddress}/{topic}[/{portAddress}]",
-    "topics": [
-      "config",
-      "input",
-      "hello"
+    "subTopics": [
+      "/#/config",
+      "/#/input",
+      "/#/input/#",
+      "/#/hello"
     ]
   }
 }

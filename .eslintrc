@@ -16,8 +16,7 @@
     ],
     "consistent-return": 0,
     "indent": [
-      4,
-      4
+      1
     ],
     "no-multiple-empty-lines": [
       2,

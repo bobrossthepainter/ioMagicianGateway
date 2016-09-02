@@ -1,0 +1,2 @@
+,
+    "mocha": "mocha --compilers js:babel-core/register test\core\model\lokiModel_test.js"

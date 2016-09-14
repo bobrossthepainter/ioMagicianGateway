@@ -5,28 +5,40 @@ let leaf = require('../../../lib/api/common/model/Leaf');
 leaf.init(db);
 let leafModel = leaf.model;
 
-describe("DB querys for leaf (auto-id=address)", () => {
+describe("DB querys for leaf (auto-id=address)", function() {
 
   let foundLeaf = {};
-  it('Create', () => { // (A)
+  let createdLeaf;
+  it('Create', function() { // (A)
 
-    let createdLeaf = leafModel.create("node123", {
+    createdLeaf = leafModel.create({
+      "address" : "node123",
       "foo": "bar"
     });
 
     assert.strictEqual(createdLeaf.foo, "bar");
     assert.strictEqual(createdLeaf.address, "node123");
+    assert.ok(createdLeaf.id);
   });
 
-  it('Find', () => { // (A)
+  it('FindById', function() { // (A)
 
-    foundLeaf = leafModel.find("node123");
+    foundLeaf = leafModel.find(createdLeaf.id);
+
+    assert.ok(foundLeaf);
+    assert.strictEqual(foundLeaf.foo, "bar");
+    assert.strictEqual(foundLeaf.address, "node123");
+  });
+
+  it('FindByAddress', function() { // (A)
+
+    foundLeaf = leafModel.findByAddress("node123");
 
     assert.strictEqual(foundLeaf.foo, "bar");
     assert.strictEqual(foundLeaf.address, "node123");
   });
 
-  it('Update', () => { // (A)
+  it('Update', function() { // (A)
 
     foundLeaf.foo = "foo";
     let updatedLeaf = leafModel.update(foundLeaf);
@@ -35,7 +47,7 @@ describe("DB querys for leaf (auto-id=address)", () => {
     assert.strictEqual(updatedLeaf.address, "node123");
   });
 
-  it('Delete', () => { // (A)
+  it('Delete', function() { // (A)
 
     leafModel.delete(foundLeaf);
     foundLeaf = leafModel.find("node123")

@@ -1,13 +1,22 @@
 import assert from 'assert';
+const winston = require('winston');
+
+let MQTTConnectionProvider = {};
+
+let topicListener = {};
+
+winston.level = 'debug';
 
 // start mqtt broker
-require('../../../lib/api/mqtt/MQTTBrokerService');
+require('../../../lib/api/mqtt/MQTTBrokerService').service.init();
+
+let mqttTestClient = require('mqtt').connect();
 
 let mqttService = require('../../../lib/api/mqtt/service/MQTTClientService').service;
 
 let receivedMessages = [];
 let listener = {
-  newMessage: (parsedMessage, leafAddress, messageType, portAddress) => {
+  newMessage: function (parsedMessage, leafAddress, messageType, portAddress) {
     receivedMessages.push({
       parsedMessage: parsedMessage,
       leafAddress: leafAddress,
@@ -17,9 +26,9 @@ let listener = {
   }
 };
 
-mqttService.registerForTopic("#/config", listener);
+mqttService.registerForTopic("config", listener);
 
-mqttService.publish({bar: "foo"}, "node123", "config");
+// mqttService.publish({bar: "foo"}, "node123", "config");
 
 describe("MQTT messaging and observer tests", function () {
 

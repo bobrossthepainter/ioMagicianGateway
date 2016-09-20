@@ -2,6 +2,9 @@
   "generators": {
     "separatedAPI" : true
   },
+  "database": {
+    "name" : "ioMagicianGatewayData.json"
+  },
   "mosca": {
     "port": 1883,
     //mosca (mqtt) port
